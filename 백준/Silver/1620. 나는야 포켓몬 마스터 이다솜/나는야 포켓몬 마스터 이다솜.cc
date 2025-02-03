@@ -1,34 +1,42 @@
-#include <bits/stdc++.h>
-
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <numeric>
+#include <cstring>
+#include <map>
 using namespace std;
 
-int n, m;
-map<int, string> mp1;
-map<string, int> mp2;
-string s;
-
-int main() {
+int main()
+{
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+
+    int n, m;
+    map<string, int> mp1;
+    map<int, string> mp2;
+    // string a[100004];
+    string s;
+
     cin >> n >> m;
-    for (int i = 1; i <= n; i++)
-    {
+    for (int i = 1; i <= n; i++) {
         cin >> s;
-        mp1[i] = s;
-        mp2[s] = i;
+        mp1.insert({s, i});
+        mp2.insert({i, s});
+        // a[i] = s;
     }
-    for (int i = 1; i <= m; i++)
-    {
+
+    for (int i = 0; i < m; i++) {
         cin >> s;
-        if (atoi(s.c_str()) == 0)
-        {
-            cout << mp2[s] << "\n";
-        }
-        else
-        {
-            cout << mp1[atoi(s.c_str())] << "\n";
+        if (mp1.find(s) != mp1.end()) {
+            cout << mp1[s] << "\n";
+        } else {
+            cout << mp2[atoi(s.c_str())] << "\n";
         }
     }
+
+
+
+
     return 0;
 }
