@@ -1,55 +1,64 @@
 
+
 import java.io.*;
 import java.util.*;
 
 public class Main {
+    static int m,n,k;
     static int[][] mp;
     static int[][] visited;
-    static int dy[] = {-1, 0, 1, 0};
-    static int dx[] = {0, 1, 0, -1};
-
+    static int[] dy = {-1, 0, 1, 0};
+    static int[] dx = {0, 1, 0, -1};
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int T = Integer.parseInt(br.readLine());
+        int t = Integer.parseInt(br.readLine());
+        StringTokenizer st;
 
-        while(T-- > 0) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int m = Integer.parseInt(st.nextToken());
-            int n = Integer.parseInt(st.nextToken());
-            int k = Integer.parseInt(st.nextToken());
+        while (t-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            m = Integer.parseInt(st.nextToken());
+            n = Integer.parseInt(st.nextToken());
+            k = Integer.parseInt(st.nextToken());
             mp = new int[n][m];
             visited = new int[n][m];
-
-            for (int i = 0; i < k; i++) {
-                StringTokenizer st1 = new StringTokenizer(br.readLine());
-                int a1 = Integer.parseInt(st1.nextToken());
-                int a2 = Integer.parseInt(st1.nextToken());
-                mp[a2][a1] = 1;
+            for (int i = 0; i < n; i++) {
+                Arrays.fill(visited[i], 0);
+                Arrays.fill(mp[i], 0);
             }
 
-            int cnt = 0;
+            for (int i = 0; i < k; i++) {
+                st = new StringTokenizer(br.readLine());
+                int a = Integer.parseInt(st.nextToken());
+                int b = Integer.parseInt(st.nextToken());
+                mp[b][a] = 1;
+            }
+
+            int ret = 0;
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
-                    if (mp[i][j] == 1 && visited[i][j] == 0) {
-                        go(i, j, n, m);
-                        cnt++;
+                    if (visited[i][j] == 0 && mp[i][j] == 1) {
+                        dfs(i, j);
+                        ret++;
                     }
                 }
             }
-            System.out.println(cnt);
 
+            System.out.println(ret);
         }
     }
 
-    static void go(int y, int x, int n, int m) {
+    static void dfs(int y, int x) {
         visited[y][x] = 1;
+
         for (int i = 0; i < 4; i++) {
             int ny = y + dy[i];
             int nx = x + dx[i];
-            if (ny < 0 || nx < 0 || ny >=n || nx >= m) continue;
-            if (mp[ny][nx] != 1) continue;
-            if (visited[ny][nx] != 0) continue;
-            go(ny, nx, n , m);
+
+            if (ny < 0 || nx < 0 || ny >= n || nx >= m) continue;
+            if (visited[ny][nx] == 1) continue;
+            if (mp[ny][nx] == 1) {
+                dfs(ny, nx);
+            }
         }
     }
 }
