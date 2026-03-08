@@ -1,18 +1,12 @@
-import itertools
+import sys
+from itertools import combinations
 
-li = []
+input = sys.stdin.readline
 
-for i in range(9):
-	li.append(int(input()))
-# array = [int(input()) for _ in range(9)]
+arr = [int(input()) for _ in range(9)]
 
-# nPr = itertools.permutations(li, 3)
-# print(list(nPr))
-nCr = itertools.combinations(li, 7)
-
-
-for i in nCr:
-	if sum(i) == 100:
-		for j in sorted(i):
-			print(j)
-		break
+for items in combinations(arr, 7):
+    if sum(items) == 100:
+        for i in sorted(items):
+            print(i)
+        break
