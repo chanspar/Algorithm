@@ -1,24 +1,21 @@
-a,b,c = input().split()
-a = int(a)
-b = int(b)
-c = int(c)
+# 2979
 
-park = [0] * 102
-ret = 0
+fee1, fee2, fee3 = map(int, input().split())
+# print(fee1, fee2, fee3)
 
+arr = [0 for _ in range(1, 101)]
 for i in range(3):
-	s, e = input().split()
-	s = int(s)
-	e = int(e)
-	for j in range(s, e):
-		park[j] += 1
+    a, b = map(int, input().split())
+    for j in range(a, b):
+        arr[j] += 1
+    
+total_fee = 0
+for i in arr:
+    if i == 1:
+        total_fee += fee1    
+    elif i == 2:
+        total_fee += fee2 * 2
+    elif i == 3:
+        total_fee += fee3 * 3
 
-for i in range(1, 101):
-	if park[i] == 1:
-		ret += a
-	elif park[i] == 2:
-		ret += b * 2
-	elif park[i] == 3:
-		ret += c * 3
-
-print(ret)
+print(total_fee)
