@@ -1,27 +1,23 @@
+# 9996
+import sys
+
+input = sys.stdin.readline
+
 n = int(input())
 
-pattern = input()
-idx = pattern.index('*')
-# for c in range(len(pattern)):
-# 	if pattern[c] == '*':
-# 		idx = c
-# 		break
+quiz = input().rstrip()
+star_idx = quiz.find('*')
+front = quiz[:star_idx]
+back = quiz[star_idx + 1:]
 
-head = pattern[0:idx]
-tail = pattern[idx + 1:]
-
-# print(head)
-# print(tail)
-
+result = []
 for i in range(n):
-	s = input()
-	if len(s) < len(head) + len(tail):
-		print('NE')
-	# s_head = s[0:idx]
-	# s_tail = s[-(len(pattern) - idx - 1):]
+    answer = input().rstrip()
+    if not answer.startswith(front):
+        result.append("NE")
+    elif not answer[len(front):].endswith(back):
+        result.append("NE")
+    else:
+        result.append("DA")
 
-	elif s.startswith(head) and s.endswith(tail):
-		print('DA')
-	else:
-		print('NE')
-
+print('\n'.join(result))
