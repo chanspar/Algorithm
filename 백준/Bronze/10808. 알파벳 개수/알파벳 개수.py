@@ -1,8 +1,15 @@
-s = input()
-ret = [0 for i in range(26)]
+# 10808
+import sys
+from collections import Counter 
 
-for i in s:
-	ret[ord(i) - ord('a')] += 1
+input = sys.stdin.readline
 
-for i in range(26):
-	print(ret[i], end=' ')
+str = input().rstrip()
+cnt = Counter(str)
+result = [0 for _ in range(26)]
+
+for key, value in cnt.items():
+    # print(key, value)
+    result[ord(key) - 97] = value
+
+print(*result)
