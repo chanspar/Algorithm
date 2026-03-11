@@ -1,17 +1,20 @@
-t = int(input())
+import sys
+from collections import defaultdict
 
-while t > 0:
-	n = int(input())
-	mp = {}
-	for _ in range(n):
-		s = input().split(' ')[1]
-		if s in mp:
-			mp[s] = mp.get(s) + 1
-		else:
-			mp[s] = 1
-	ret = 1
-	for v in mp.values():
-		ret = ret * (v + 1)
-	
-	print(ret - 1)
-	t -= 1
+input = sys.stdin.readline
+
+T = int(input())
+
+while T > 0:
+    n = int(input())
+    d = defaultdict(int)
+    for _ in range(n):
+        s = input().rstrip().split()[1]
+        d[s] += 1
+    
+    result = 1
+    for k, v in d.items():
+        result = result * (v + 1)
+    
+    print(result - 1)
+    T -= 1
