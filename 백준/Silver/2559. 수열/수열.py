@@ -1,16 +1,18 @@
-a, b = input().split(' ')
-a = int(a)
-b = int(b)
+import sys
 
-num = input().split(' ')
-li = []
-for i in range(len(num)):
-	if i == 0:
-		li.append(int(num[i]))
-	else:
-		li.append(int(num[i]) + int(li[i - 1]))
+input = sys.stdin.readline
 
-mx = li[b - 1]
-for i in range(b, a):
-	mx = max(mx, li[i] - li[i - b])
-print(mx)
+n, k = map(int, input().split())
+
+arr = list(map(int, input().split()))
+cumsum = []
+tmp = 0
+for i in arr:
+    tmp += i
+    cumsum.append(tmp)
+
+result = cumsum[k - 1]
+for i in range(k, len(cumsum)):
+    result = max(result, cumsum[i] - cumsum[i - k])
+
+print(result)
