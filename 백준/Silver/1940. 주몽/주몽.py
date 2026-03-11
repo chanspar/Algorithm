@@ -1,20 +1,24 @@
+import sys
+
+input = sys.stdin.readline
+
 n = int(input())
 m = int(input())
-li = list(map(int, input().split()))
+arr = list(map(int, input().split()))
+arr.sort()
 
-li.sort()
-left, right = 0, n-1
-ret = 0
+left = 0
+right = n - 1
 
+result = 0
 while left < right:
-    s = li[left] + li[right]
-    if s == m:
-        ret += 1
-        left += 1
+    tmp = arr[left] + arr[right]
+    if tmp > m:
         right -= 1
-    elif s < m:
+    elif tmp < m:
         left += 1
     else:
-        right -= 1
+        result += 1
+        left += 1
 
-print(ret)
+print(result)
