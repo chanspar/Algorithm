@@ -1,46 +1,42 @@
 import sys
+sys.setrecursionlimit(10**6)
 input = sys.stdin.readline
-sys.setrecursionlimit(10 ** 6)
 
+m,n,k = map(int, input().split())
+dy=[-1,0,1,0]
+dx=[0,1,0,-1]
+mp = [[0] * n for _ in range(m)]
 
-m, n, k = map(int, input().split(' '))
-
-mp = [[0 for _ in range(n)] for _ in range(m)]
-visited = [[0 for _ in range(n)] for _ in range(m)]
-dy = [1, 0 , -1, 0]
-dx = [0, 1, 0, -1]
-
-def go(y, x):
-    visited[y][x] = 1
-    global extend 
-    extend += 1
-
-    for i in range(4):
-        ny = dy[i] + y
-        nx = dx[i] + x
-        if ny < 0 or nx < 0 or ny >= m or nx >= n or visited[ny][nx] == 1: 
-            continue
-        if mp[ny][nx] == 0:
-            go(ny, nx)
-
+def paint(x1,y1,x2,y2):
+    for i in range(y1, y2):
+        for j in range(x1, x2):
+            mp[i][j] = 1
 
 for _ in range(k):
-    sx, sy, ex, ey = map(int, input().split(' '))
-    for i in range(sy, ey):
-        for j in range(sx, ex):
-            mp[i][j] = 1
+    s_x, s_y, e_x, e_y = map(int, input().split())
+    paint(s_x, s_y, e_x, e_y)
+
+def go(y,x):
+    visited[y][x] = 1
+    area = 1
     
+    for i in range(4):
+        ny=y+dy[i]
+        nx=x+dx[i]
+        if 0 <= nx < n and 0 <= ny < m:
+            if visited[ny][nx] == 0 and mp[ny][nx] == 0:
+                area += go(ny, nx)
+    return area
 
-ret = 0
+visited = [[0]*n for _ in range(m)]
 result = []
-for y in range(m):
-    for x in range(n):
-        if mp[y][x] == 0 and visited[y][x] == 0:
-            extend = 0
-            go(y, x)
-            ret += 1
-            result.append(extend)
+cnt = 0
+for i in range(m):
+    for j in range(n):
+        if visited[i][j] == 0 and mp[i][j] == 0:
+            cnt += 1
+            result.append(go(i,j))
 
-print(ret)
-for i in sorted(result):
-    print(i, end = ' ')
+result.sort()
+print(cnt)
+print(*result)
