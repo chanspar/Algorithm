@@ -1,14 +1,19 @@
 import sys
 from collections import OrderedDict
+
 input = sys.stdin.readline
+n,c = map(int, input().split())
+li = list(input().split())
 
-dic = OrderedDict()
-n,c=map(int, input().split(' '))
-for i in input().rstrip('\n').split(' '):
-    dic[i] = dic.get(i, 0) + 1
+d = OrderedDict()
+for a in li:
+    d[a] = d.get(a, 0) + 1
 
-# print(dic)
+# print(d)
 
-for k, v in sorted(dic.items(), key=lambda x: x[1], reverse=True):
+result = ''
+for k, v in sorted(d.items(), key=lambda x: -x[1]):
     for _ in range(v):
-        print(k, end = ' ')
+        result += k + ' '
+
+print(result)
